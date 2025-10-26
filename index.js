@@ -8,6 +8,22 @@ const ProjectRouter = require('./routes/project');
 const ClientRouter = require('./routes/client');
 const BoardRouter = require('./routes/board');
 const { Admin } = require('./controllers/user.controller');
+import fs from 'fs';
+import path from 'path';
+
+// Tous les dossiers d'upload que tu utilises
+const uploadDirs = ['Cimages', 'files', 'images'];
+
+// Création automatique s’ils n’existent pas
+uploadDirs.forEach((dir) => {
+  const fullPath = path.join(process.cwd(), dir);
+  if (!fs.existsSync(fullPath)) {
+    fs.mkdirSync(fullPath, { recursive: true });
+    console.log(`✅ Created upload folder: ${fullPath}`);
+  } else {
+    console.log(`📂 Folder already exists: ${fullPath}`);
+  }
+});
 
 const app = express();
 app.use(express.json());
